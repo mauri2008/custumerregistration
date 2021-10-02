@@ -33,6 +33,12 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'login::index');
 
+// signin
+$routes->post('/signin','auth::index');
+
+$routes->group('sis',['filter'=>'authfilter'], function($routes){
+    $routes->get('home','home::index');
+});
 /*
  * --------------------------------------------------------------------
  * Additional Routing
