@@ -1,12 +1,13 @@
-
+// instanciado a buttom salvar do modal 
 const btnSave = document.querySelector('#btn-save');
 
 btnSave.addEventListener('click',()=>{
     handleSave();
 })
 
+// função responsavel por enviar requição de salvamento dos dados
 const handleSave = async ()=>{
-    const clientId = document.querySelector('#btn-save');
+    const clientId = document.querySelector('#client_id');
     const clientName = document.querySelector('#client_name');
     const subtitle = document.querySelector('#emailHelp');
     const formclient = document.getElementById('form_client')
@@ -19,7 +20,6 @@ const handleSave = async ()=>{
          alert(clientName, subtitle)
     }
 
-    if(clientId.value == ''){
 
     let datarest  = await handleRequest('sis/client','POST',new FormData(formclient))
 
@@ -27,13 +27,15 @@ const handleSave = async ()=>{
         closeOneModal('modaldefault')
         notification('success', 'Cliente inserido com sucesso');
         setTimeout(()=>{
-           document.location.reload() 
+        document.location.reload() 
         },500) 
     }
-
-    }
+    
 
 }
+
+// função resposavel por fechar modal 
+// necessario por não esta usando a biblioteca JQUERY
 function closeOneModal(modalId) {
 
     // get modal
@@ -55,8 +57,34 @@ function closeOneModal(modalId) {
 
      // remove opened modal backdrop
       document.body.removeChild(modalBackdrops[0]);
-  }
+}
 
+// função resposavel por preencher o modal com os dados a serem editados
+const handleEdit = (id, name)=>{
+    const inputId = document.querySelector('#client_id')
+    const inputName = document.querySelector('#client_name')
+
+    inputId.value = id;
+    inputName.value = name;
+
+}
+
+// funcção responsavel por requisitar a remoção de um dado
+const handleRemove = async (id)=>{
+    if(confirm('Deseja realmente remover este cliente?')){
+        const requestDelete = await handleRequest(`sis/client?client_id=${id}`,'DELETE','');
+    
+        if(requestDelete){
+            notification('success', 'Cliente removido com sucesso');
+            setTimeout(()=>{
+               document.location.reload() 
+            },500) 
+        }
+
+    }
+}
+
+// função responsavel por fazer todas as requisições
 const handleRequest = async (url, method, data)=>{
     // get URL BASE
     const url_base = document.getElementById('base_url').getAttribute('data-url');
@@ -82,6 +110,7 @@ const handleRequest = async (url, method, data)=>{
     }
 }
 
+// função reponsavel por  estilizar o input modal quando não esta preenchido
 const alert = (clientName, subtitle)=>{
 
     if(clientName.value == '')
@@ -100,6 +129,7 @@ const alert = (clientName, subtitle)=>{
     }
 }
 
+// função reponsavel por gerar as notificações toasts
 const notification = (type = null, msg='') =>{
 
     const toastLiveExample = document.getElementById('liveToast')
