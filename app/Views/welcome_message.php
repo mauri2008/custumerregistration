@@ -34,8 +34,8 @@
 					<li class="list-group-item d-flex justify-content-between">
 						<span><?= $client->client_name?></span>
 						<div>
-							<a href="" class="text-warning" title="Editar Cliente"><i class="far fa-edit me-3"></i></a>
-							<a href="" class="text-danger" title="Remover cliente" ><i class="far fa-trash-alt me-3"></i></a>
+							<span class="text-warning" title="Editar Cliente" onclick="handleEdit(<?= $client->client_id?>,'<?= $client->client_name?>')" data-bs-toggle="modal" data-bs-target="#modaldefault" style="cursor: pointer;"><i class="far fa-edit me-3"></i></span>
+							<span class="text-danger" title="Remover cliente" onclick="handleRemove(<?= $client->client_id?>)" style="cursor: pointer;"><i class="far fa-trash-alt me-3"></i></span>
 						</div>
 					</li>
 				<?php endforeach;?>
@@ -58,7 +58,7 @@
 			</div>
 			<div class="modal-body">
 				<form id="form_client">
-					<input type="hidden" name="client_id">
+					<input type="hidden" name="client_id" id="client_id">
 					<div class="mb-3">
 					  <label for="client_name"><small> Nome do cliente</small> </label>
 					  <input type="text" class="form-control mt-2" name="client_name" id="client_name" aria-describedby="helpId" placeholder="Informe nome do cliente">

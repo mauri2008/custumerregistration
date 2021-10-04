@@ -39,6 +39,8 @@ $routes->post('/signin','auth::index');
 $routes->group('sis',['filter'=>'authfilter'], function($routes){
     $routes->get('home','home::index');
     $routes->post('client','client::store');
+    $routes->post('client/edit','client::updateClient');
+    $routes->delete('client','client::destroy');
 });
 /*
  * --------------------------------------------------------------------
